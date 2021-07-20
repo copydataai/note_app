@@ -55,11 +55,13 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'rest_framework',
     
 ]
 
 LOCAL_APPS = [
-    'note.users.apps.UsersAppConfig'
+    'note.users.apps.UsersAppConfig',
+    'note.notes.apps.NotesAppConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
