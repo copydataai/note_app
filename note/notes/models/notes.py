@@ -19,6 +19,11 @@ class Note(NoteModel):
     content = mdoels.CharField('note description', max_length=300)
     picture = models.ImageField(upload_to='notes/pictures', blank=True, null=True)
 
+    file = models.FileField(upload_to='notes/files/%Y/%m/%d/', blank=True, null=True)
+
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+
     #Stats
     notes_made = models.PositiveIntegerField(default=0)
 
