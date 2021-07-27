@@ -22,7 +22,7 @@ RUN pip install -r /requirements/local.txt
 COPY ./compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r//' /entrypoint
 RUN chmod +x /entrypoint
-k
+
 COPY ./compose/local/django/start /start
 RUN sed -i 's/\r//' /start
 RUN chmod +x /start
