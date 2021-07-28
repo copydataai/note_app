@@ -4,6 +4,6 @@
 from django.urls import path
 
 # Views
-from notes
+from note.notes.views import Note
 
 urlpatterns = []
