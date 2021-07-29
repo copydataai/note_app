@@ -10,8 +10,12 @@ cffi==1.14.6
 
 # Password security
 argon2-cffi==20.1.0
+
 # Django
 Django==3.2.5
+
+# jwt
+pyjwt==2.1.0
 
 # Enviroment
 django-environ==0.4.5

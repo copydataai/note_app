@@ -17,7 +17,7 @@ from note.users.models import User, Profile
 import jwt
 
 
-class UserModelSerializer(serializers.Serializer):
+class UserModelSerializer(serializers.ModelSerializer):
     """User model serializer."""
 
     profile = ProfileModelSerializer(read_only=True)
@@ -44,19 +44,20 @@ class UserSignUpSerializer(serializers.Serializer):
         validators=[UniqueValidator(queryset=User.objects.all())]
     )
 
+    # Name
     first_name = serializers.CharField(min_length=2, max_length=30)
+    last_name = serializers.CharField(min_length=2, max_length=30)
+
+    # Phone number
     phone_regex = RegexValidator(
         regex=r'\+?1?\d{9,15}$',
         message='Phone number must be entered in the format: +999999999. Up to 15 digits allowed.'
     )
     phone_number = serializers.CharField(validators=[phone_regex])
 
+    # Password
     password = serializers.CharField(min_length=8, max_length=64)
     password_confirmation = serializers.CharField(min_length=8, max_length=64)
-
-    first_name = serializers.CharField(min_length=2, max_length=30)
-    last_name = serializers.CharField(min_length=2, max_length=30)
-
 
     def validate(self, data):
         """Verify passwords match."""
@@ -72,13 +73,13 @@ class UserSignUpSerializer(serializers.Serializer):
         data.pop('password_confirmation')
         user = User.Objects.create_user(**data, is_verified=False, is_client=True)
         Profile.objectscreate(user=user)
+        send_confirmation_email.delay(user_pk=user.pk)
         return user
 
 
 class UserLoginSerializer(serializers.Serializer):
     """
     User login serializer.
-
     Handle the login request data.
     """
     email = serializers.EmailField()
@@ -100,4 +101,28 @@ class UserLoginSerializer(serializers.Serializer):
         return self.context['user'], token.key
 
 
+class AccountVerificationSerializer(serializers.Serializer):
+    """Account verification serializer."""
 
+    token = serializers.CharField()
+
+    def validate_token(self, data):
+        """Verify token is valid."""
+        try:
+            payload = jwt.decode(data, settings.SECRET_KEY, algorithms=['HS256'])
+        except jwt.ExpiredSignatureError:
+            raise serializers.ValidationError('Verification link has expired.')
+        except jwt.PyJWTError:
+            raise serializers.ValidationError('Invalid token.')
+        if payload['type'] != 'email_confirmation':
+            raise serializers.ValidationError('Invalid token.')
+
+        self.context['payload'] = payload
+        return data
+
+    def save(self):
+        """Update user's verified status."""
+        payload = self.context['payload']
+        user = User.objects.get(username=payload['user'])
+        user.is_verified = True
+        user.save()
