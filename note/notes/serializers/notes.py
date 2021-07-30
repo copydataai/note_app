@@ -7,6 +7,10 @@ from rest_framework.validators import UniqueValidator
 # Models 
 from notes.note.models import Note
 
+class NoteModelSerializer():
+    """Note model serializer."""
+    print('')
+
 class NotesSerializer(serializers.Serializer):
     """Notes serializer."""
     title = serializers.CharField()

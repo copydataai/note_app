@@ -2,8 +2,8 @@
 
 import environ
 
-ROOT_DIR = environ.Path(___file__) - 3
-APP_DIRS = ROOT_DIR.path('notes')
+ROOT_DIR = environ.Path(__file__) - 3
+APPS_DIR = ROOT_DIR.path('note')
 
 env = environ.Env()
 
@@ -30,10 +30,10 @@ AUTH_USER_MODEL = 'users.User'
 STATIC_ROOT = str(ROOT_DIR('staticfiles'))
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    str(APPS_DIRS.path('static')),
+    str(APPS_DIR.path('static')),
 ]
 # Media
-MEDIA_ROOT = str(APPS_DIRS('media'))
+MEDIA_ROOT = str(APPS_DIR('media'))
 MEDIA_URL = '/media/'
 
 # Language and timezone
@@ -56,7 +56,8 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     'rest_framework',
-    
+    'rest_framework.authtoken',
+    'django_filters'
 ]
 
 LOCAL_APPS = [
@@ -105,9 +106,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            str(APP_DIRS.path('templates')),
+            str(APPS_DIR.path('templates')),
         ],
-        'APP_DIRS': True,
         'OPTIONS': {
             'debug': DEBUG,
             'loaders': [
@@ -129,6 +129,10 @@ SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = True
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
+
+# Admin
+ADMIN_URL = 'admin/'
+
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

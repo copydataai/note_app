@@ -4,9 +4,9 @@
 from django.contrib import admin
 
 # Utilities
-from note.notes.models import Notes
+from note.notes.models import Note
 
-@admin.register(Notes)
+@admin.register(Note)
 class NotesAdmin(admin.ModelAdmin):
     """Notes admin."""
     list_display = (
