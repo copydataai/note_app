@@ -134,9 +134,6 @@ X_FRAME_OPTIONS = 'DENY'
 ADMIN_URL = 'admin/'
 
 
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 # Django REST Framework
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (

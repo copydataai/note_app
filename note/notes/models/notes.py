@@ -7,7 +7,7 @@ from django.db import models
 from note.utils.models import NoteModel
 
 class Note(NoteModel):
-    """Circle model.
+    """Note model.
     
     A Note is a private where 
     """

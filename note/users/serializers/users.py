@@ -13,6 +13,9 @@ from rest_framework.validators import UniqueValidator
 # Models
 from note.users.models import User, Profile
 
+# Serializers
+from note.users.serializers.profiles import ProfileModelSerializer
+
 # Utilities
 import jwt
 

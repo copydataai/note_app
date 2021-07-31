@@ -11,7 +11,7 @@ from note.users.models import User, Profile
 class CustomUserAdmin(UserAdmin):
     """User model admin."""
 
-    list_display = ('email', 'username', 'first_name', 'last_name')
+    list_display = ('email','first_name', 'last_name')
     list_filter = ('created', 'modified')
 
 

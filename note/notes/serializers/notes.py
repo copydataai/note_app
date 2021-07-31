@@ -4,10 +4,14 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-# Models 
-from notes.note.models import Note
+# Models
+from note.notes.models import Note
 
-class NoteModelSerializer():
+# Utilities
+from datetime import timedelta
+from django.utils import timezone
+
+class NoteModelSerializer(serializers.Serializer):
     """Note model serializer."""
     print('')
 
@@ -15,7 +19,7 @@ class NotesSerializer(serializers.Serializer):
     """Notes serializer."""
     title = serializers.CharField()
     slug_name = serializers.SlugField()
-    modified = serializer.DateTimeField()
+    modified = serializers.DateTimeField()
     
 
 class CreateNotesSerializer(serializers.Serializer):

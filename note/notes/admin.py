@@ -14,10 +14,8 @@ class NotesAdmin(admin.ModelAdmin):
         'title',
         'notes_made',
         'is_public',
-        'is_edit'
     )
     search_fields = ('slug_name', 'title')
     list_filter = (
         'is_public',
-        'is_edit'
     )
